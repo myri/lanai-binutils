@@ -1,7 +1,10 @@
 #! /bin/sh
-autogen Makefile.def
 git submodule init
 git submodule update
+autogen Makefile.def
+aclocal && autoheader && autoconf
 for f in */prep ; do
-    ( cd `dirname $f` && ./prep )
+    d=`dirname $f`
+    echo "Preparing in $d"
+    ( cd "$d" && ./prep )
 done
