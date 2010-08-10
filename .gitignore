@@ -1,0 +1,13 @@
+Makefile
+Makefile.in
+autom4te.cache/
+config.back
+config.cache
+config.h.in
+config.log
+config.status
+configure
+maybedep.tmp
+md5.sum
+nohup.out
+serdep.tmp

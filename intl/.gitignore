@@ -1,0 +1,8 @@
+Makefile
+config.cache
+config.h
+config.log
+config.status
+libintl.h
+po2tbl.sed
+stamp-h

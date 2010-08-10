@@ -1,0 +1,1 @@
+./configure --target=lanai --enable-maintainer-mode --prefix=/where/you/want/it

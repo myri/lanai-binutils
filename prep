@@ -3,8 +3,8 @@ git submodule init
 git submodule update
 autogen Makefile.def
 aclocal && autoheader && autoconf
-for f in */prep ; do
-    d=`dirname $f`
-    echo "Preparing in $d"
-    ( cd "$d" && ./prep )
-done
+# for f in */prep ; do
+#     d=`dirname $f`
+#     echo "Preparing in $d"
+#     ( cd "$d" && ./prep )
+# done

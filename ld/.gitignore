@@ -1,0 +1,25 @@
+Makefile
+Makefile.in
+autom4te.cache/
+config.cache
+config.h
+config.in
+config.log
+config.status
+configure
+configure.lineno
+elanai3coff.c
+ld-new
+ld.1
+ld.info
+ldlex.c
+*.o
+ldemul-list.h
+ldscripts
+libtool
+stamp-h
+stamp-h1
+stringify.sed
+tdirs
+tmpdir
+nothing added to commit but untracked files present (use "git add" to track)
