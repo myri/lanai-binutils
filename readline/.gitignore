@@ -1,0 +1,10 @@
+*.o
+Makefile
+config.cache
+config.h
+config.log
+config.status
+configure.lineno
+libhistory.a
+libreadline.a
+stamp-h

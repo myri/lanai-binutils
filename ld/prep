@@ -1,2 +1,2 @@
 #! /bin/sh
-autoheader && autoconf && automake
+aclocal && autoheader && autoconf && automake

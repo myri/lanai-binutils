@@ -1,6 +1,0 @@
-[submodule "gcc"]
-	path = gcc
-	url = git:/ufs/arpa/glenn/git/gcc.git
-[submodule "gendat"]
-	path = gendat
-	url = git:/ufs/arpa/glenn/git/gendat.git
