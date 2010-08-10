@@ -54,8 +54,8 @@ man3dir = $(mandir)/man3
 DESTDIR =
 
 # Programs to make tags files.
-ETAGS = etags -tw
-CTAGS = ctags -tw
+ETAGS = etags
+CTAGS = ctags
 
 CFLAGS = @CFLAGS@
 LOCAL_CFLAGS = @LOCAL_CFLAGS@ -DRL_LIBRARY_VERSION='"$(RL_LIBRARY_VERSION)"'
