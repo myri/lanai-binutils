@@ -1,28 +1,49 @@
-If building from a tarball:
-	./configure --target=lanai --prefix=/where/you/want/it
+Building from a tarball
+=======================
 
-If building from a Git checkout:
-	./prep
-	./configure --target=lanai --prefix=/where/you/want/it\
-	  --enable-maintainer-mode
-
-If building a release from a Git checkout:	  
-  On a capable machine in an shared dictory:
-	git clean -f -x -d
-	./prep
-	./configure
-	make clean
-	make distclean
-
-To install maximally compatible linux binaries from woody in a tmp dir:
-	PATH=/nfs/common/autoconf/bin:/nfs/common/git/ia32-linux/bin:$PATH
-	git clone ~glenn/git/binutils.git
-	cd binutils
-	git checkout lanai
-	./prep
+	tar xjf lanai-binutils-2.15..X.tar.bz2
+	cd lanai-binutils-2.15..X
 	./configure --target=lanai \
 	  --prefix=/ufs/glenn/install/i686-unknown-linux
-	
-	export PATH
-	/path/to/configure --target=lanai --prefix=/where/you/want/it\
+	make
+	make install
+
+Building a tarball
+==================
+
+On glenn.sw.myri.com:
+   	git clone -b lanai ~glenn/git/binutils.git
+	cd binutils
+	git clean -f -x -d
+	./prep
+	./configure\
+	  --target=lanai\
 	  --enable-maintainer-mode
+	make -k distclean
+	N=lanai-binutils-2.15..X
+	tar cjf ../$N.tar.bz2 --exclude-vcs --transform "s@^@$N/@" *
+
+Installing maximally-compatible shared binaries
+===============================================
+
+	Pick and old Linux machine, like woody.sw.myri.com.
+	Build and install the tarball.
+
+At Myricom, it's best to work in Git and skip the tarball so we can easily
+commit fixes:
+
+  On glenn.sw.myri.com:
+        cd /ufs/glenn
+   	git clone -b lanai ~glenn/git/binutils.git
+	cd binutils
+	./prep
+	./configure\
+	  --target=lanai\
+	  --enable-maintainer-mode
+	make -k distclean
+  On woody.sw.myri.com:
+	cd /ufs/glenn/binutils
+	./configure --target=lanai \
+	  --prefix=/ufs/glenn/install/i686-unknown-linux
+	make
+	make install
