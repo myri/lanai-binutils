@@ -1,4 +1,4 @@
-/* gconfig.in.  Generated automatically from configure.in by autoheader.  */
+/* gconfig.in.  Generated automatically from configure.in by autoheader 2.13.  */
 
 /* Define if using alloca.c.  */
 #undef C_ALLOCA

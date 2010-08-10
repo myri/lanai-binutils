@@ -115,6 +115,7 @@ ia64-*-freebsd* | ia64-*-kfreebsd*-gnu)
 ia64-*-netbsd*)		targ_emul=elf64_ia64 ;;
 ia64-*-linux*)		targ_emul=elf64_ia64 ;;
 ia64-*-aix*)		targ_emul=elf64_aix ;;
+lanai3-*-*)		targ_emul=lanai3coff ;;
 m32r*le-*-elf*)         targ_emul=m32rlelf ;;
 m32r*-*-elf*)           targ_emul=m32relf ;;
 m32r*le-*-linux-gnu*)   targ_emul=m32rlelf_linux ;;
@@ -353,6 +354,7 @@ sh64-*-elf*)
 			targ_extra_emuls="shlelf shelf32 shlelf32 shelf64 shlelf64"
 			targ_extra_libpath=$targ_extra_emuls
 			;;
+lanai*-*-*)		targ_emul=lanai3coff ;;
 m68k-sony-*)		targ_emul=news ;;
 m68k-hp-bsd*)		targ_emul=hp300bsd ;;
 m68*-motorola-sysv*)	targ_emul=delta68 ;;

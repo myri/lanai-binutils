@@ -4165,6 +4165,7 @@ for this_target in $target $canon_targets ; do
       ia64)		cpu_type=ia64 ;;
       ip2k)             cpu_type=ip2k endian=big ;;
       iq2000)           cpu_type=iq2000 endian=big ;;
+      lanai*)		cpu_type=lanai3 ;;
       m6811|m6812|m68hc12) cpu_type=m68hc11 ;;
       m680[012346]0)	cpu_type=m68k ;;
       m68008)		cpu_type=m68k ;;
@@ -4376,6 +4377,8 @@ echo "$as_me: WARNING: GAS support for ${generic_target} is preliminary and a wo
       ip2k-*-*)				fmt=elf ;;
 
       iq2000-*-elf)         		fmt=elf bfd_gas=yes ;;
+
+      lanai3-*-coff)	    		fmt=coff bfd_gas=yes ;;
 
       m32r-*-elf*)			fmt=elf ;;
       m32r-*-linux*)			fmt=elf em=linux;;

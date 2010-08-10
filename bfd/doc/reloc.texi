@@ -1794,6 +1794,15 @@ this offset in the reloc's section offset.
 @deffnx {} BFD_RELOC_IA64_LTOFF_DTPREL22
 Intel IA64 Relocations.
 @end deffn
+@deffn {} BFD_RELOC_LANAI3_6_S
+@deffnx {} BFD_RELOC_LANAI3_10_S
+@deffnx {} BFD_RELOC_LANAI3_21
+@deffnx {} BFD_RELOC_LANAI3_21_F
+@deffnx {} BFD_RELOC_LANAI3_25
+@deffnx {} BFD_RELOC_LANAI3_PC25
+@deffnx {} BFD_RELOC_LANAI3_25_S
+These relocs are used by the LANai3 binutils.
+@end deffn
 @deffn {} BFD_RELOC_M68HC11_HI8
 Motorola 68HC11 reloc.
 This is the 8 bit high part of an absolute address.

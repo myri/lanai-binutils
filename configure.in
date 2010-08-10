@@ -18,8 +18,18 @@
 ##############################################################################
 ### WARNING: this file contains embedded tabs.  Do not run untabify on this file.
 
+# Force the use of the --disable-nls option.
+
 AC_INIT(move-if-change)
+
+if test "$1" != "--disable-nls" ; then
+  echo "@@@ Forcing --disable-nls @@@"
+  "$0" "--disable-nls" "$@"
+  exit
+fi
+
 AC_PREREQ(2.13)
+PATH=`echo "${PATH}" | sed -e 's@^.:@@g' | sed -e 's@:.:@:@g'`
 AC_CANONICAL_SYSTEM
 AC_ARG_PROGRAM
 
@@ -133,7 +143,7 @@ host_libs="intl mmalloc libiberty opcodes bfd readline tcl tk itcl tix libgui zl
 # know that we are building the simulator.
 # binutils, gas and ld appear in that order because it makes sense to run
 # "make check" in that particular order.
-host_tools="texinfo byacc flex bison binutils gas ld gcc sid sim gdb make patch prms send-pr gprof etc expect dejagnu ash bash bzip2 m4 autoconf automake libtool diff rcs fileutils shellutils time textutils wdiff find uudecode hello tar gzip indent recode release sed utils guile perl gawk findutils gettext zip fastjar"
+host_tools="byacc flex bison binutils gas ld gcc sid sim gdb make patch prms send-pr gprof etc expect dejagnu ash bash bzip2 m4 autoconf automake libtool diff rcs fileutils shellutils time textutils wdiff find uudecode hello tar gzip indent recode release sed utils guile perl gawk findutils gettext zip fastjar gendat"
 
 # libgcj represents the runtime libraries only used by gcj.
 libgcj="target-libffi \
@@ -2151,3 +2161,11 @@ MAINT=$MAINTAINER_MODE_TRUE
 AC_SUBST(MAINT)dnl
 
 AC_OUTPUT(Makefile)
+
+# Intercept any "make" in the build directory with "." in the user's PATH.
+
+if test ! -f ./make
+then
+  ln -s $(srcdir)/make ./make
+fi
+chmod a+x ./make

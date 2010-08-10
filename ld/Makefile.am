@@ -228,6 +228,7 @@ ALL_EMULATIONS = \
 	ei386nw.o \
 	ei386pe.o \
 	ei386pe_posix.o \
+	elanai3coff.o \
 	elnk960.o \
 	em32relf.o \
 	em32rlelf.o \
@@ -970,6 +971,9 @@ ei386pe_posix.c: $(srcdir)/emulparams/i386pe_posix.sh \
 elnk960.c: $(srcdir)/emulparams/lnk960.sh \
   $(srcdir)/emultempl/lnk960.em $(srcdir)/scripttempl/i960.sc ${GEN_DEPENDS}
 	${GENSCRIPTS} lnk960 "$(tdir_lnk960)"
+elanai3coff.c: $(srcdir)/emulparams/lanai3coff.sh \
+  $(srcdir)/emultempl/generic.em $(srcdir)/scripttempl/lanai3coff.sc ${GEN_DEPENDS}
+	${GENSCRIPTS} lanai3coff
 em68hc11elf.c: $(srcdir)/emulparams/m68hc11elf.sh \
   $(srcdir)/emultempl/m68hc1xelf.em $(srcdir)/emultempl/elf32.em \
   $(srcdir)/scripttempl/elfm68hc11.sc ${GEN_DEPENDS}

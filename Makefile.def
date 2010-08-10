@@ -47,6 +47,7 @@ host_modules= { module= find; };
 host_modules= { module= flex; no_check_cross= true; };
 host_modules= { module= gas; };
 host_modules= { module= gawk; };
+host_modules= { module= gendat; };
 host_modules= { module= gettext; };
 host_modules= { module= gnuserv; };
 host_modules= { module= gprof; };

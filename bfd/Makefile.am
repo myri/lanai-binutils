@@ -71,6 +71,7 @@ ALL_MACHINES = \
 	cpu-i960.lo \
 	cpu-ip2k.lo \
 	cpu-iq2000.lo \
+	cpu-lanai3.o \
 	cpu-m32r.lo \
 	cpu-m68hc11.lo \
 	cpu-m68hc12.lo \
@@ -126,6 +127,7 @@ ALL_MACHINES_CFILES = \
 	cpu-i960.c \
 	cpu-ip2k.c \
 	cpu-iq2000.c \
+	cpu-lanai3.c \
 	cpu-m32r.c \
 	cpu-m68hc11.c \
 	cpu-m68hc12.c \
@@ -1042,6 +1044,8 @@ coff-go32.lo: coff-go32.c coff-i386.c $(INCDIR)/filenames.h \
 coff-i960.lo: coff-i960.c $(INCDIR)/filenames.h $(INCDIR)/coff/i960.h \
   $(INCDIR)/coff/internal.h libcoff.h $(INCDIR)/bfdlink.h \
   coffcode.h coffswap.h
+coff-lanai3.lo: coff-lanai3.c $(INCDIR)/coff/lanai3.h \
+  $(INCDIR)/coff/internal.h libcoff.h $(INCDIR)/bfdlink.h coffcode.h coffswap.h
 coff-m68k.lo: coff-m68k.c $(INCDIR)/filenames.h $(INCDIR)/coff/m68k.h \
   $(INCDIR)/coff/external.h $(INCDIR)/coff/internal.h \
   libcoff.h $(INCDIR)/bfdlink.h coffcode.h coffswap.h

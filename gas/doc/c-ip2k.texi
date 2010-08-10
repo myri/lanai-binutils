@@ -4,11 +4,11 @@
 @c For copying conditions, see the file as.texinfo.
 @ifset GENERIC
 @page
-@node IP2K-Dependent
+@node IP2K-Dependent, Machine Dependencies
 @chapter IP2K Dependent Features
 @end ifset
 @ifclear GENERIC
-@node Machine Dependencies
+@node Machine Dependencies,  , IP2K-Dependent
 @chapter IP2K Dependent Features
 @end ifclear
 
@@ -17,7 +17,7 @@
 * IP2K-Opts::                   IP2K Options
 @end menu
 
-@node IP2K-Opts
+@node IP2K-Opts,  , Machine Dependencies, Machine Dependencies
 @section IP2K Options
 
 @cindex options, IP2K

@@ -192,6 +192,7 @@ extern int print_insn_i386_att		(bfd_vma, disassemble_info *);
 extern int print_insn_i386_intel	(bfd_vma, disassemble_info *);
 extern int print_insn_ia64		(bfd_vma, disassemble_info *);
 extern int print_insn_i370		(bfd_vma, disassemble_info *);
+extern int print_insn_lanai3		(bfd_vma, disassemble_info *);
 extern int print_insn_m68hc11		(bfd_vma, disassemble_info *);
 extern int print_insn_m68hc12		(bfd_vma, disassemble_info *);
 extern int print_insn_m68k		(bfd_vma, disassemble_info *);

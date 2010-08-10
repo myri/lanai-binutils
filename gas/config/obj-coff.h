@@ -78,6 +78,13 @@
 #endif
 #endif
 
+#ifdef TC_LANAI3
+#include "coff/lanai3.h"
+#ifndef TARGET_FORMAT
+#define TARGET_FORMAT "coff-lanai3"
+#endif
+#endif
+
 #ifdef TC_M68K
 #include "coff/m68k.h"
 #ifndef TARGET_FORMAT

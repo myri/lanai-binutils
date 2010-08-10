@@ -85,7 +85,7 @@ tooldir = @tooldir@
 build_tooldir = @build_tooldir@
 
 # Directory in which the compiler finds executables, libraries, etc.
-libsubdir = $(libdir)/gcc/$(target_alias)/$(gcc_version)
+libsubdir = $(libdir)/gcc-lib/$(target_alias)/$(gcc_version)
 GDB_NLM_DEPS = 
 
 # This is the name of the environment variable used for the path to
@@ -551,6 +551,7 @@ configure-host: maybe-configure-gcc  \
     maybe-configure-flex \
     maybe-configure-gas \
     maybe-configure-gawk \
+    maybe-configure-gendat \
     maybe-configure-gettext \
     maybe-configure-gnuserv \
     maybe-configure-gprof \
@@ -641,6 +642,7 @@ all-host: maybe-all-gcc  \
     maybe-all-flex \
     maybe-all-gas \
     maybe-all-gawk \
+    maybe-all-gendat \
     maybe-all-gettext \
     maybe-all-gnuserv \
     maybe-all-gprof \
@@ -735,6 +737,7 @@ info-host: maybe-info-gcc  \
     maybe-info-flex \
     maybe-info-gas \
     maybe-info-gawk \
+    maybe-info-gendat \
     maybe-info-gettext \
     maybe-info-gnuserv \
     maybe-info-gprof \
@@ -1276,6 +1279,28 @@ info-gawk: \
 	done; \
 	echo "Doing info in gawk" ; \
 	(cd gawk && \
+	  $(MAKE) $(BASE_FLAGS_TO_PASS) "AR=$${AR}" "AS=$${AS}" \
+	          "CC=$${CC}" "CXX=$${CXX}" "LD=$${LD}" "NM=$${NM}" \
+	          "RANLIB=$${RANLIB}" \
+	          "DLLTOOL=$${DLLTOOL}" "WINDRES=$${WINDRES}" \
+	          info) \
+	  || exit 1
+
+
+.PHONY: maybe-info-gendat info-gendat
+maybe-info-gendat:
+
+info-gendat: \
+    configure-gendat 
+	@[ -f ./gendat/Makefile ] || exit 0; \
+	r=`${PWD_COMMAND}`; export r; \
+	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
+	$(SET_LIB_PATH) \
+	for flag in $(EXTRA_HOST_FLAGS); do \
+	  eval `echo "$$flag" | sed -e "s|^\([^=]*\)=\(.*\)|\1='\2'; export \1|"`; \
+	done; \
+	echo "Doing info in gendat" ; \
+	(cd gendat && \
 	  $(MAKE) $(BASE_FLAGS_TO_PASS) "AR=$${AR}" "AS=$${AS}" \
 	          "CC=$${CC}" "CXX=$${CXX}" "LD=$${LD}" "NM=$${NM}" \
 	          "RANLIB=$${RANLIB}" \
@@ -2634,6 +2659,7 @@ dvi-host: maybe-dvi-gcc  \
     maybe-dvi-flex \
     maybe-dvi-gas \
     maybe-dvi-gawk \
+    maybe-dvi-gendat \
     maybe-dvi-gettext \
     maybe-dvi-gnuserv \
     maybe-dvi-gprof \
@@ -3175,6 +3201,28 @@ dvi-gawk: \
 	done; \
 	echo "Doing dvi in gawk" ; \
 	(cd gawk && \
+	  $(MAKE) $(BASE_FLAGS_TO_PASS) "AR=$${AR}" "AS=$${AS}" \
+	          "CC=$${CC}" "CXX=$${CXX}" "LD=$${LD}" "NM=$${NM}" \
+	          "RANLIB=$${RANLIB}" \
+	          "DLLTOOL=$${DLLTOOL}" "WINDRES=$${WINDRES}" \
+	          dvi) \
+	  || exit 1
+
+
+.PHONY: maybe-dvi-gendat dvi-gendat
+maybe-dvi-gendat:
+
+dvi-gendat: \
+    configure-gendat 
+	@[ -f ./gendat/Makefile ] || exit 0; \
+	r=`${PWD_COMMAND}`; export r; \
+	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
+	$(SET_LIB_PATH) \
+	for flag in $(EXTRA_HOST_FLAGS); do \
+	  eval `echo "$$flag" | sed -e "s|^\([^=]*\)=\(.*\)|\1='\2'; export \1|"`; \
+	done; \
+	echo "Doing dvi in gendat" ; \
+	(cd gendat && \
 	  $(MAKE) $(BASE_FLAGS_TO_PASS) "AR=$${AR}" "AS=$${AS}" \
 	          "CC=$${CC}" "CXX=$${CXX}" "LD=$${LD}" "NM=$${NM}" \
 	          "RANLIB=$${RANLIB}" \
@@ -4533,6 +4581,7 @@ TAGS-host: maybe-TAGS-gcc  \
     maybe-TAGS-flex \
     maybe-TAGS-gas \
     maybe-TAGS-gawk \
+    maybe-TAGS-gendat \
     maybe-TAGS-gettext \
     maybe-TAGS-gnuserv \
     maybe-TAGS-gprof \
@@ -5074,6 +5123,28 @@ TAGS-gawk: \
 	done; \
 	echo "Doing TAGS in gawk" ; \
 	(cd gawk && \
+	  $(MAKE) $(BASE_FLAGS_TO_PASS) "AR=$${AR}" "AS=$${AS}" \
+	          "CC=$${CC}" "CXX=$${CXX}" "LD=$${LD}" "NM=$${NM}" \
+	          "RANLIB=$${RANLIB}" \
+	          "DLLTOOL=$${DLLTOOL}" "WINDRES=$${WINDRES}" \
+	          TAGS) \
+	  || exit 1
+
+
+.PHONY: maybe-TAGS-gendat TAGS-gendat
+maybe-TAGS-gendat:
+
+TAGS-gendat: \
+    configure-gendat 
+	@[ -f ./gendat/Makefile ] || exit 0; \
+	r=`${PWD_COMMAND}`; export r; \
+	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
+	$(SET_LIB_PATH) \
+	for flag in $(EXTRA_HOST_FLAGS); do \
+	  eval `echo "$$flag" | sed -e "s|^\([^=]*\)=\(.*\)|\1='\2'; export \1|"`; \
+	done; \
+	echo "Doing TAGS in gendat" ; \
+	(cd gendat && \
 	  $(MAKE) $(BASE_FLAGS_TO_PASS) "AR=$${AR}" "AS=$${AS}" \
 	          "CC=$${CC}" "CXX=$${CXX}" "LD=$${LD}" "NM=$${NM}" \
 	          "RANLIB=$${RANLIB}" \
@@ -6432,6 +6503,7 @@ install-info-host: maybe-install-info-gcc  \
     maybe-install-info-flex \
     maybe-install-info-gas \
     maybe-install-info-gawk \
+    maybe-install-info-gendat \
     maybe-install-info-gettext \
     maybe-install-info-gnuserv \
     maybe-install-info-gprof \
@@ -6995,6 +7067,29 @@ install-info-gawk: \
 	done; \
 	echo "Doing install-info in gawk" ; \
 	(cd gawk && \
+	  $(MAKE) $(BASE_FLAGS_TO_PASS) "AR=$${AR}" "AS=$${AS}" \
+	          "CC=$${CC}" "CXX=$${CXX}" "LD=$${LD}" "NM=$${NM}" \
+	          "RANLIB=$${RANLIB}" \
+	          "DLLTOOL=$${DLLTOOL}" "WINDRES=$${WINDRES}" \
+	          install-info) \
+	  || exit 1
+
+
+.PHONY: maybe-install-info-gendat install-info-gendat
+maybe-install-info-gendat:
+
+install-info-gendat: \
+    configure-gendat \
+    info-gendat 
+	@[ -f ./gendat/Makefile ] || exit 0; \
+	r=`${PWD_COMMAND}`; export r; \
+	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
+	$(SET_LIB_PATH) \
+	for flag in $(EXTRA_HOST_FLAGS); do \
+	  eval `echo "$$flag" | sed -e "s|^\([^=]*\)=\(.*\)|\1='\2'; export \1|"`; \
+	done; \
+	echo "Doing install-info in gendat" ; \
+	(cd gendat && \
 	  $(MAKE) $(BASE_FLAGS_TO_PASS) "AR=$${AR}" "AS=$${AS}" \
 	          "CC=$${CC}" "CXX=$${CXX}" "LD=$${LD}" "NM=$${NM}" \
 	          "RANLIB=$${RANLIB}" \
@@ -8413,6 +8508,7 @@ installcheck-host: maybe-installcheck-gcc  \
     maybe-installcheck-flex \
     maybe-installcheck-gas \
     maybe-installcheck-gawk \
+    maybe-installcheck-gendat \
     maybe-installcheck-gettext \
     maybe-installcheck-gnuserv \
     maybe-installcheck-gprof \
@@ -8954,6 +9050,28 @@ installcheck-gawk: \
 	done; \
 	echo "Doing installcheck in gawk" ; \
 	(cd gawk && \
+	  $(MAKE) $(BASE_FLAGS_TO_PASS) "AR=$${AR}" "AS=$${AS}" \
+	          "CC=$${CC}" "CXX=$${CXX}" "LD=$${LD}" "NM=$${NM}" \
+	          "RANLIB=$${RANLIB}" \
+	          "DLLTOOL=$${DLLTOOL}" "WINDRES=$${WINDRES}" \
+	          installcheck) \
+	  || exit 1
+
+
+.PHONY: maybe-installcheck-gendat installcheck-gendat
+maybe-installcheck-gendat:
+
+installcheck-gendat: \
+    configure-gendat 
+	@[ -f ./gendat/Makefile ] || exit 0; \
+	r=`${PWD_COMMAND}`; export r; \
+	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
+	$(SET_LIB_PATH) \
+	for flag in $(EXTRA_HOST_FLAGS); do \
+	  eval `echo "$$flag" | sed -e "s|^\([^=]*\)=\(.*\)|\1='\2'; export \1|"`; \
+	done; \
+	echo "Doing installcheck in gendat" ; \
+	(cd gendat && \
 	  $(MAKE) $(BASE_FLAGS_TO_PASS) "AR=$${AR}" "AS=$${AS}" \
 	          "CC=$${CC}" "CXX=$${CXX}" "LD=$${LD}" "NM=$${NM}" \
 	          "RANLIB=$${RANLIB}" \
@@ -10312,6 +10430,7 @@ mostlyclean-host: maybe-mostlyclean-gcc  \
     maybe-mostlyclean-flex \
     maybe-mostlyclean-gas \
     maybe-mostlyclean-gawk \
+    maybe-mostlyclean-gendat \
     maybe-mostlyclean-gettext \
     maybe-mostlyclean-gnuserv \
     maybe-mostlyclean-gprof \
@@ -10831,6 +10950,27 @@ mostlyclean-gawk:
 	done; \
 	echo "Doing mostlyclean in gawk" ; \
 	(cd gawk && \
+	  $(MAKE) $(BASE_FLAGS_TO_PASS) "AR=$${AR}" "AS=$${AS}" \
+	          "CC=$${CC}" "CXX=$${CXX}" "LD=$${LD}" "NM=$${NM}" \
+	          "RANLIB=$${RANLIB}" \
+	          "DLLTOOL=$${DLLTOOL}" "WINDRES=$${WINDRES}" \
+	          mostlyclean) \
+	  || exit 1
+
+
+.PHONY: maybe-mostlyclean-gendat mostlyclean-gendat
+maybe-mostlyclean-gendat:
+
+mostlyclean-gendat: 
+	@[ -f ./gendat/Makefile ] || exit 0; \
+	r=`${PWD_COMMAND}`; export r; \
+	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
+	$(SET_LIB_PATH) \
+	for flag in $(EXTRA_HOST_FLAGS); do \
+	  eval `echo "$$flag" | sed -e "s|^\([^=]*\)=\(.*\)|\1='\2'; export \1|"`; \
+	done; \
+	echo "Doing mostlyclean in gendat" ; \
+	(cd gendat && \
 	  $(MAKE) $(BASE_FLAGS_TO_PASS) "AR=$${AR}" "AS=$${AS}" \
 	          "CC=$${CC}" "CXX=$${CXX}" "LD=$${LD}" "NM=$${NM}" \
 	          "RANLIB=$${RANLIB}" \
@@ -12087,6 +12227,7 @@ clean-host: maybe-clean-gcc  \
     maybe-clean-flex \
     maybe-clean-gas \
     maybe-clean-gawk \
+    maybe-clean-gendat \
     maybe-clean-gettext \
     maybe-clean-gnuserv \
     maybe-clean-gprof \
@@ -12606,6 +12747,27 @@ clean-gawk:
 	done; \
 	echo "Doing clean in gawk" ; \
 	(cd gawk && \
+	  $(MAKE) $(BASE_FLAGS_TO_PASS) "AR=$${AR}" "AS=$${AS}" \
+	          "CC=$${CC}" "CXX=$${CXX}" "LD=$${LD}" "NM=$${NM}" \
+	          "RANLIB=$${RANLIB}" \
+	          "DLLTOOL=$${DLLTOOL}" "WINDRES=$${WINDRES}" \
+	          clean) \
+	  || exit 1
+
+
+.PHONY: maybe-clean-gendat clean-gendat
+maybe-clean-gendat:
+
+clean-gendat: 
+	@[ -f ./gendat/Makefile ] || exit 0; \
+	r=`${PWD_COMMAND}`; export r; \
+	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
+	$(SET_LIB_PATH) \
+	for flag in $(EXTRA_HOST_FLAGS); do \
+	  eval `echo "$$flag" | sed -e "s|^\([^=]*\)=\(.*\)|\1='\2'; export \1|"`; \
+	done; \
+	echo "Doing clean in gendat" ; \
+	(cd gendat && \
 	  $(MAKE) $(BASE_FLAGS_TO_PASS) "AR=$${AR}" "AS=$${AS}" \
 	          "CC=$${CC}" "CXX=$${CXX}" "LD=$${LD}" "NM=$${NM}" \
 	          "RANLIB=$${RANLIB}" \
@@ -13876,6 +14038,7 @@ distclean-host: maybe-distclean-gcc  \
     maybe-distclean-flex \
     maybe-distclean-gas \
     maybe-distclean-gawk \
+    maybe-distclean-gendat \
     maybe-distclean-gettext \
     maybe-distclean-gnuserv \
     maybe-distclean-gprof \
@@ -14395,6 +14558,27 @@ distclean-gawk:
 	done; \
 	echo "Doing distclean in gawk" ; \
 	(cd gawk && \
+	  $(MAKE) $(BASE_FLAGS_TO_PASS) "AR=$${AR}" "AS=$${AS}" \
+	          "CC=$${CC}" "CXX=$${CXX}" "LD=$${LD}" "NM=$${NM}" \
+	          "RANLIB=$${RANLIB}" \
+	          "DLLTOOL=$${DLLTOOL}" "WINDRES=$${WINDRES}" \
+	          distclean) \
+	  || exit 1
+
+
+.PHONY: maybe-distclean-gendat distclean-gendat
+maybe-distclean-gendat:
+
+distclean-gendat: 
+	@[ -f ./gendat/Makefile ] || exit 0; \
+	r=`${PWD_COMMAND}`; export r; \
+	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
+	$(SET_LIB_PATH) \
+	for flag in $(EXTRA_HOST_FLAGS); do \
+	  eval `echo "$$flag" | sed -e "s|^\([^=]*\)=\(.*\)|\1='\2'; export \1|"`; \
+	done; \
+	echo "Doing distclean in gendat" ; \
+	(cd gendat && \
 	  $(MAKE) $(BASE_FLAGS_TO_PASS) "AR=$${AR}" "AS=$${AS}" \
 	          "CC=$${CC}" "CXX=$${CXX}" "LD=$${LD}" "NM=$${NM}" \
 	          "RANLIB=$${RANLIB}" \
@@ -15665,6 +15849,7 @@ maintainer-clean-host: maybe-maintainer-clean-gcc  \
     maybe-maintainer-clean-flex \
     maybe-maintainer-clean-gas \
     maybe-maintainer-clean-gawk \
+    maybe-maintainer-clean-gendat \
     maybe-maintainer-clean-gettext \
     maybe-maintainer-clean-gnuserv \
     maybe-maintainer-clean-gprof \
@@ -16184,6 +16369,27 @@ maintainer-clean-gawk:
 	done; \
 	echo "Doing maintainer-clean in gawk" ; \
 	(cd gawk && \
+	  $(MAKE) $(BASE_FLAGS_TO_PASS) "AR=$${AR}" "AS=$${AS}" \
+	          "CC=$${CC}" "CXX=$${CXX}" "LD=$${LD}" "NM=$${NM}" \
+	          "RANLIB=$${RANLIB}" \
+	          "DLLTOOL=$${DLLTOOL}" "WINDRES=$${WINDRES}" \
+	          maintainer-clean) \
+	  || exit 1
+
+
+.PHONY: maybe-maintainer-clean-gendat maintainer-clean-gendat
+maybe-maintainer-clean-gendat:
+
+maintainer-clean-gendat: 
+	@[ -f ./gendat/Makefile ] || exit 0; \
+	r=`${PWD_COMMAND}`; export r; \
+	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
+	$(SET_LIB_PATH) \
+	for flag in $(EXTRA_HOST_FLAGS); do \
+	  eval `echo "$$flag" | sed -e "s|^\([^=]*\)=\(.*\)|\1='\2'; export \1|"`; \
+	done; \
+	echo "Doing maintainer-clean in gendat" ; \
+	(cd gendat && \
 	  $(MAKE) $(BASE_FLAGS_TO_PASS) "AR=$${AR}" "AS=$${AS}" \
 	          "CC=$${CC}" "CXX=$${CXX}" "LD=$${LD}" "NM=$${NM}" \
 	          "RANLIB=$${RANLIB}" \
@@ -17511,6 +17717,7 @@ do-check: maybe-check-gcc  \
     maybe-check-flex \
     maybe-check-gas \
     maybe-check-gawk \
+    maybe-check-gendat \
     maybe-check-gettext \
     maybe-check-gnuserv \
     maybe-check-gprof \
@@ -17621,6 +17828,7 @@ install-host-nogcc:  \
     maybe-install-flex \
     maybe-install-gas \
     maybe-install-gawk \
+    maybe-install-gendat \
     maybe-install-gettext \
     maybe-install-gnuserv \
     maybe-install-gprof \
@@ -17688,6 +17896,7 @@ install-host: maybe-install-gcc  \
     maybe-install-flex \
     maybe-install-gas \
     maybe-install-gawk \
+    maybe-install-gendat \
     maybe-install-gettext \
     maybe-install-gnuserv \
     maybe-install-gprof \
@@ -19314,6 +19523,74 @@ install-gawk: installdirs
 	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
 	$(SET_LIB_PATH) \
 	(cd gawk && $(MAKE) $(FLAGS_TO_PASS) install)
+
+
+.PHONY: configure-gendat maybe-configure-gendat
+maybe-configure-gendat:
+configure-gendat:
+	@test ! -f gendat/Makefile || exit 0; \
+	[ -d gendat ] || mkdir gendat; \
+	r=`${PWD_COMMAND}`; export r; \
+	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
+	CC="$(CC)"; export CC; \
+	CFLAGS="$(CFLAGS)"; export CFLAGS; \
+	CONFIG_SHELL="$(SHELL)"; export CONFIG_SHELL; \
+	CXX="$(CXX)"; export CXX; \
+	CXXFLAGS="$(CXXFLAGS)"; export CXXFLAGS; \
+	AR="$(AR)"; export AR; \
+	AS="$(AS)"; export AS; \
+	CC_FOR_BUILD="$(CC_FOR_BUILD)"; export CC_FOR_BUILD; \
+	DLLTOOL="$(DLLTOOL)"; export DLLTOOL; \
+	LD="$(LD)"; export LD; \
+	LDFLAGS="$(LDFLAGS)"; export LDFLAGS; \
+	NM="$(NM)"; export NM; \
+	RANLIB="$(RANLIB)"; export RANLIB; \
+	WINDRES="$(WINDRES)"; export WINDRES; \
+	OBJCOPY="$(OBJCOPY)"; export OBJCOPY; \
+	OBJDUMP="$(OBJDUMP)"; export OBJDUMP; \
+	echo Configuring in gendat; \
+	cd gendat || exit 1; \
+	case $(srcdir) in \
+	  \.) \
+	    srcdiroption="--srcdir=."; \
+	    libsrcdir=".";; \
+	  /* | [A-Za-z]:[\\/]*) \
+	    srcdiroption="--srcdir=$(srcdir)/gendat"; \
+	    libsrcdir="$$s/gendat";; \
+	  *) \
+	    srcdiroption="--srcdir=../$(srcdir)/gendat"; \
+	    libsrcdir="$$s/gendat";; \
+	esac; \
+	$(SHELL) $${libsrcdir}/configure \
+	  $(HOST_CONFIGARGS) $${srcdiroption} \
+	  || exit 1
+
+.PHONY: all-gendat maybe-all-gendat
+maybe-all-gendat:
+all-gendat: configure-gendat
+	@r=`${PWD_COMMAND}`; export r; \
+	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
+	$(SET_LIB_PATH) \
+	(cd gendat && $(MAKE) $(FLAGS_TO_PASS) all)
+
+.PHONY: check-gendat maybe-check-gendat
+maybe-check-gendat:
+
+check-gendat:
+	@r=`${PWD_COMMAND}`; export r; \
+	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
+	$(SET_LIB_PATH) \
+	(cd gendat && $(MAKE) $(FLAGS_TO_PASS) check)
+
+
+.PHONY: install-gendat maybe-install-gendat
+maybe-install-gendat:
+
+install-gendat: installdirs
+	@r=`${PWD_COMMAND}`; export r; \
+	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
+	$(SET_LIB_PATH) \
+	(cd gendat && $(MAKE) $(FLAGS_TO_PASS) install)
 
 
 .PHONY: configure-gettext maybe-configure-gettext

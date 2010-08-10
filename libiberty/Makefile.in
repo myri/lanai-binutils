@@ -28,6 +28,7 @@
 
 libiberty_topdir = @libiberty_topdir@
 srcdir = @srcdir@
+VPATH = @srcdir@
 
 prefix = @prefix@
 

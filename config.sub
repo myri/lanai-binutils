@@ -627,6 +627,10 @@ case $basic_machine in
 		basic_machine=m68k-isi
 		os=-sysv
 		;;
+	lanai)
+	        basic_machine=lanai-myricom
+		os=-coff
+		;;
 	m88k-omron*)
 		basic_machine=m88k-omron
 		;;

@@ -1918,6 +1918,11 @@ coff_set_arch_mach_hook (abfd, filehdr)
       arch = bfd_arch_ia64;
       break;
 #endif
+#ifdef LANAI3
+    case LANAI3MAGIC:
+      arch = bfd_arch_lanai3;
+      break;
+#endif
 #ifdef A29K_MAGIC_BIG
     case A29K_MAGIC_BIG:
     case A29K_MAGIC_LITTLE:
@@ -2761,6 +2766,12 @@ coff_set_flags (abfd, magicp, flagsp)
 #ifdef IA64MAGIC
     case bfd_arch_ia64:
       *magicp = IA64MAGIC;
+      return TRUE;
+      break;
+#endif
+#ifdef LANAI3MAGIC
+    case bfd_arch_lanai3:
+      *magicp = LANAI3MAGIC;
       return TRUE;
       break;
 #endif
@@ -4012,6 +4023,11 @@ coff_write_object_contents (abfd)
 #define __A_MAGIC_SET__
     internal_a.magic = ZMAGIC;
 #endif /* IA64 */
+
+#if defined (LANAI3)
+#define __A_MAGIC_SET__
+    internal_a.magic = LANAI3MAGIC;
+#endif /* LANAI3 */
 
 #if defined(SPARC)
 #define __A_MAGIC_SET__
