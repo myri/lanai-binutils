@@ -15,5 +15,14 @@ If building a release from a Git checkout:
 	make distclean
 
 To install maximally compatible linux binaries from woody in a tmp dir:
+	PATH=/nfs/common/autoconf/bin:/nfs/common/git/ia32-linux/bin:$PATH
+	git clone ~glenn/git/binutils.git
+	cd binutils
+	git checkout lanai
+	./prep
+	./configure --target=lanai \
+	  --prefix=/ufs/glenn/install/i686-unknown-linux
+	
+	export PATH
 	/path/to/configure --target=lanai --prefix=/where/you/want/it\
 	  --enable-maintainer-mode
