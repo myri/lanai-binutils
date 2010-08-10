@@ -1,11 +1,13 @@
 *.o
 Makefile
 Makefile.in
+arparse.[ch]
 aclocal.m4
 addr2line
 ar
 arlex.c
-autom4te.cache/
+autom4te.cache
+binutils
 config.cache
 config.h
 config.in
