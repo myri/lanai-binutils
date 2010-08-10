@@ -1,3 +1,7 @@
 #! /bin/sh
+autogen Makefile.def
 git submodule init
 git submodule update
+for f in */prep ; do
+    ( cd `dirname $f` && ./prep )
+done
