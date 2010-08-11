@@ -91,6 +91,12 @@ const char *architecture_pname[] = {
 	L3_RR | ((f)?L3_RR_F:0) | L3_RR_OP(op)				\
 	| ((((op)&L3_OP_MASK)==L3_SH) ? ((op)&L3_ARITH?0xc0:0x80) : 0 ))
 
+#define LEADZ_PAIR(f) GENERIC_PAIR(L3_LEADZ_MASK,			\
+	L3_LEADZ | ((f)?L3_LEADZ_F:0))
+
+#define POPC_PAIR(f) GENERIC_PAIR(L3_POPC_MASK,				\
+	L3_POPC | ((f)?L3_POPC_F:0))
+
 #define RRR_PAIR() GENERIC_PAIR(L3_RRR_MASK,				\
 	L3_RRR )
 
@@ -429,6 +435,11 @@ struct lanai3_opcode lanai3_opcodes[] = {
   { "uld.b",  SPLS_PAIR(0,L3_UNSIGNED_BYTE,1,1)	,"i[*1],d",  F_BYTE|F_SPLS,0},
   { "uld.b",  SPLS_PAIR(0,L3_UNSIGNED_BYTE,0,1)	,"i[1*],d",  F_BYTE|F_SPLS,0},
 
+  /* leadz */
+
+  { "leadz",	LEADZ_PAIR(0)			,"1,d",	     F_LEADZ,0},
+  { "leadz.f",	LEADZ_PAIR(1)			,"1,d",	     F_LEADZ,0},
+							     
   /* or */
 
   { "or",	RR_PAIR(0,L3_OR)		,"1,2,d",    F_RR,0},
@@ -437,6 +448,11 @@ struct lanai3_opcode lanai3_opcodes[] = {
   { "or.f",	RR_PAIR(1,L3_OR)		,"1,2,d",    F_RR,0},
   { "or.f",	RI_PAIR(L3_OR,1,0)		,"1,j,d",    F_RI,0},
   { "or.f",	RI_PAIR(L3_OR,1,1)		,"1,J,d",    F_RI,0},
+
+  /* popc */						     
+							     
+  { "popc",	POPC_PAIR(0)			,"1,d",	     F_POPC,0},
+  { "popc.f",	POPC_PAIR(1)			,"1,d",	     F_POPC,0},
 
   /* put */
 

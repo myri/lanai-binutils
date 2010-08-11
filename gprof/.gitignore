@@ -1,1 +1,4 @@
 gconfig.in
+Makefile.in
+aclocal.m4
+configure
