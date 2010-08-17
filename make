@@ -9,6 +9,7 @@
 ################################################################
 
 echo "@@@ ./make is removing \".\" from PATH and rerunning make @@@"
-PATH=`echo ${PATH} | sed -e 's@^.:@@g' | sed -e 's@:.:@:@g'`
+PATH=`echo ${PATH} | sed -e 's@[\.:][\.:]*@:@g' | sed -e 's@^:@@g'`
+echo PATH="$PATH"
 make "$@"
 echo "@@@ ./make removed \".\" from PATH and rerunning make @@@"
