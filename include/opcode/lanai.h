@@ -115,6 +115,9 @@ struct lanai_opcode {
 #define	F_CONDITIONAL	0x40000
 #define	F_REL		0x80000
 
+#define F_LEADZ		0x100000
+#define F_POPC		0x200000
+
 #define	F_CONDBR	(F_BR|F_CONDITIONAL)	/* Conditional branch    */
 #define	F_UNBR		(F_BR)			/* Unconditional branch  */
 #define	F_RELCONDBR	(F_REL|F_BR|F_CONDITIONAL) /* Conditional branch */
@@ -212,8 +215,14 @@ Literals:([])*+- ,
 #define L3_RI_OPCODE_MASK   (0x80000000)
 #define L3_RI_MASK          (0xf0030000)
 #define L3_RR               (0xc0000000)
-#define L3_RR_OPCODE_MASK   (0xf0000000)
-#define L3_RR_MASK          (0xf00207f8)
+#define L3_RR_OPCODE_MASK   (0xf0000003)
+#define L3_RR_MASK          (0xf00207fb)
+#define L3_LEADZ            (0xc0000002)
+#define L3_LEADZ_OPCODE_MASK L3_RR_OPCODE_MASK
+#define L3_LEADZ_MASK       (0xf00207fb)
+#define L3_POPC             (0xc0000003)
+#define L3_POPC_OPCODE_MASK L3_RR_OPCODE_MASK
+#define L3_POPC_MASK        (0xf00207fb)
 #define L3_RRR              (0xd0000000)
 #define L3_RRR_OPCODE_MASK  (0xf0000000)
 #define L3_RRR_MASK         (0xf0000000)
@@ -287,7 +296,9 @@ Literals:([])*+- ,
 #define L3_RI_F  (0x00020000)
 #define L3_RI_H  (0x00010000)
 
-#define L3_RR_F  (0x00020000)
+#define L3_RR_F    (0x00020000)
+#define L3_LEADZ_F L3_RR_F
+#define L3_POPC_F  L3_RR_F
 
 #define L3_RRR_F (0x00020000)
 #define L3_RRR_H (0x00010000)
