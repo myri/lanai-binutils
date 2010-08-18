@@ -2049,6 +2049,11 @@ coff_set_arch_mach_hook (bfd *abfd, void * filehdr)
       arch = bfd_arch_ia64;
       break;
 #endif
+#ifdef LANAI3
+    case LANAI3MAGIC:
+      arch = bfd_arch_lanai3;
+      break;
+#endif
 #ifdef ARMMAGIC
     case ARMMAGIC:
     case ARMPEMAGIC:
@@ -2903,7 +2908,11 @@ coff_set_flags (bfd * abfd,
       *magicp = IA64MAGIC;
       return TRUE;
 #endif
-
+#ifdef LANAI3MAGIC
+    case bfd_arch_lanai3:
+      *magicp = LANAI3MAGIC;
+      return TRUE;
+#endif
 #ifdef MC68MAGIC
     case bfd_arch_m68k:
 #ifdef APOLLOM68KMAGIC

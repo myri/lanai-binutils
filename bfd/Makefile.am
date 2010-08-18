@@ -94,6 +94,7 @@ ALL_MACHINES = \
 	cpu-ia64.lo \
 	cpu-ip2k.lo \
 	cpu-iq2000.lo \
+	cpu-lanai3.o \
 	cpu-lm32.lo \
 	cpu-m10200.lo \
 	cpu-m10300.lo \
@@ -165,6 +166,7 @@ ALL_MACHINES_CFILES = \
 	cpu-ia64.c \
 	cpu-ip2k.c \
 	cpu-iq2000.c \
+	cpu-lanai3.c \
 	cpu-lm32.c \
 	cpu-m10200.c \
 	cpu-m10300.c \

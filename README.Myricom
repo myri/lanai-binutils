@@ -1,0 +1,7 @@
+If building from a tarball:
+	./configure --target=lanai --prefix=/where/you/want/it
+
+If building from a Git checkout:
+	./prep
+	./configure --target=lanai --prefix=/where/you/want/it\
+	  --enable-maintainer-mode

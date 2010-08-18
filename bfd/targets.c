@@ -737,6 +737,7 @@ extern const bfd_target i860coff_vec;
 extern const bfd_target icoff_big_vec;
 extern const bfd_target icoff_little_vec;
 extern const bfd_target ieee_vec;
+extern const bfd_target lanai3_vec;
 extern const bfd_target m68k4knetbsd_vec;
 extern const bfd_target m68kaux_coff_vec;
 extern const bfd_target m68kcoff_vec;

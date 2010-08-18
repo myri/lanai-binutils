@@ -1989,6 +1989,7 @@ enum bfd_architecture
 #define bfd_mach_m32r2         '2'
   bfd_arch_mn10200,   /* Matsushita MN10200 */
   bfd_arch_mn10300,   /* Matsushita MN10300 */
+  bfd_arch_lanai3,    /* Myricom LANai3 */
 #define bfd_mach_mn10300               300
 #define bfd_mach_am33          330
 #define bfd_mach_am33_2        332
