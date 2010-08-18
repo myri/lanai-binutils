@@ -1,6 +1,6 @@
 /*************************************************************************
  *                                                                       *
- * Table of opcodes for the LANai3.                                      *
+ * Table of opcodes for the Lanai.                                      *
  *                                                                       *
  * Copyright (c) 1994, 1995 by Myricom, Inc.                             *
  * All rights reserved.                                                  *
@@ -66,7 +66,7 @@
 
 #include <stdio.h>
 #include "ansidecl.h"
-#include "opcode/lanai3.h"
+#include "opcode/lanai.h"
 
 const char *architecture_pname[] = {
 	"v0",
@@ -149,7 +149,7 @@ L3_RI|L3_RI_OP(op)|((f)?L3_RI_F:0)|((h)?L3_RI_H:0)|(((op)==L3_AND)?L3_RS1(1):0))
 	  aborts if it fails.
 */
 
-struct lanai3_opcode lanai3_opcodes[] = {
+struct lanai_opcode lanai_opcodes[] = {
 
   /* nop (at beginning so disassembler will use these if possible) */
 
@@ -559,4 +559,4 @@ struct lanai3_opcode lanai3_opcodes[] = {
 
 };
 
-const int bfd_lanai3_num_opcodes = ((sizeof lanai3_opcodes)/(sizeof lanai3_opcodes[0]));
+const int bfd_lanai_num_opcodes = ((sizeof lanai_opcodes)/(sizeof lanai_opcodes[0]));

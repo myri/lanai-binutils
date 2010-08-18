@@ -1,6 +1,6 @@
 /*************************************************************************
  *                                                                       *
- * Print LANai3 instructions.                                            *
+ * Print Lanai instructions.                                            *
  *                                                                       *
  * Copyright (c) 1994, 1995 by Myricom, Inc.                             *
  * All rights reserved.                                                  *
@@ -56,9 +56,10 @@
 
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "ansidecl.h"
-#include "opcode/lanai3.h"
+#include "opcode/lanai.h"
 #include "dis-asm.h"
 
 static  char *reg_names[] =
@@ -78,11 +79,11 @@ static int
 is_delayed_branch (insn)
      unsigned long insn;
 {
-  unsigned int i;
+  int i;
 
   for (i = 0; i < NUMOPCODES; ++i)
     {
-      CONST struct lanai3_opcode *opcode = &lanai3_opcodes[i];
+      CONST struct lanai_opcode *opcode = &lanai_opcodes[i];
       if ((opcode->match & insn) == opcode->match
 	  && (opcode->lose & insn) == 0)
 	return (opcode->flags & F_BR);
@@ -102,19 +103,20 @@ static int compare_opcodes (char *a, char *b);
    displacement to that register, or it is an `add' or `or' instruction
    on that register.  */
 int
-print_insn_lanai3 (memaddr, info)
+print_insn_lanai (memaddr, info)
      bfd_vma memaddr;
      disassemble_info *info;
 {
   FILE *stream = info->stream;
   bfd_byte buffer[4];
   unsigned long insn;
-  register unsigned int i;
+  register int i;
 
   if (!opcodes_sorted)
     {
-      qsort ((char *) lanai3_opcodes, NUMOPCODES,
-	     sizeof (lanai3_opcodes[0]), compare_opcodes);
+      qsort ((char *) lanai_opcodes, NUMOPCODES,
+	     sizeof (lanai_opcodes[0]),
+	     (int (*)(const void *,const void *))compare_opcodes);
       opcodes_sorted = 1;
     }
 
@@ -137,7 +139,7 @@ print_insn_lanai3 (memaddr, info)
 
   for (i = 0; i < NUMOPCODES; ++i)
     {
-      CONST struct lanai3_opcode *opcode = &lanai3_opcodes[i];
+      CONST struct lanai_opcode *opcode = &lanai_opcodes[i];
       if ((opcode->match & insn) == opcode->match
 	  && (opcode->lose & insn) == 0)
 	{
@@ -413,8 +415,8 @@ static int
 compare_opcodes (a, b)
      char *a, *b;
 {
-  struct lanai3_opcode *op0 = (struct lanai3_opcode *) a;
-  struct lanai3_opcode *op1 = (struct lanai3_opcode *) b;
+  struct lanai_opcode *op0 = (struct lanai_opcode *) a;
+  struct lanai_opcode *op1 = (struct lanai_opcode *) b;
   unsigned long int match0 = op0->match, match1 = op1->match;
   unsigned long int lose0 = op0->lose, lose1 = op1->lose;
   register unsigned int i;
@@ -423,7 +425,7 @@ compare_opcodes (a, b)
      wrong with the opcode table.  */
   if (match0 & lose0)
     {
-      fprintf (stderr, "Internal error:  bad lanai3-opcode.h: \"%s\", %#.8lx, %#.8lx\n",
+      fprintf (stderr, "Internal error:  bad lanai-opcode.h: \"%s\", %#.8lx, %#.8lx\n",
 	       op0->name, match0, lose0);
       op0->lose &= ~op0->match;
       lose0 = op0->lose;
@@ -431,7 +433,7 @@ compare_opcodes (a, b)
 
   if (match1 & lose1)
     {
-      fprintf (stderr, "Internal error: bad lanai3-opcode.h: \"%s\", %#.8lx, %#.8lx\n",
+      fprintf (stderr, "Internal error: bad lanai-opcode.h: \"%s\", %#.8lx, %#.8lx\n",
 	       op1->name, match1, lose1);
       op1->lose &= ~op1->match;
       lose1 = op1->lose;
@@ -482,7 +484,7 @@ compare_opcodes (a, b)
       else
 	{
 	  fprintf (stderr,
-		   "Internal error: bad lanai3-opcode.h: \"%s\" == \"%s\"\n",
+		   "Internal error: bad lanai-opcode.h: \"%s\" == \"%s\"\n",
 		   op0->name, op1->name);
 	}
     }

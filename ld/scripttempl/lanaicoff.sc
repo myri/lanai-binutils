@@ -1,6 +1,6 @@
 #/*************************************************************************
 # *                                                                       *
-# * Linker script for LANai3 COFF.                                        *
+# * Linker script for Lanai COFF.                                        *
 # *                                                                       *
 # * Copyright (c) 1994, 1995 by Myricom, Inc.                             *
 # * All rights reserved.                                                  *

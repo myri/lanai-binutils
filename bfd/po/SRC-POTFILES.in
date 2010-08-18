@@ -87,6 +87,7 @@ cpu-ia64.c
 cpu-ip2k.c
 cpu-iq2000.c
 cpu-l1om.c
+cpu-lanai.c
 cpu-lm32.c
 cpu-m10200.c
 cpu-m10300.c

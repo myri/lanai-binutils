@@ -79,6 +79,8 @@ config/tc-ip2k.c
 config/tc-ip2k.h
 config/tc-iq2000.c
 config/tc-iq2000.h
+config/tc-lanai.c
+config/tc-lanai.h
 config/tc-lm32.c
 config/tc-lm32.h
 config/tc-m32c.c

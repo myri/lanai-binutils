@@ -1,6 +1,6 @@
 /*************************************************************************
  *                                                                       *
- * BFD support for the LANai3 architecture.                              *
+ * tc-lanai.h - Macros and type defines for the lanai.                 *
  *                                                                       *
  * Copyright (c) 1994, 1995 by Myricom, Inc.                             *
  * All rights reserved.                                                  *
@@ -34,44 +34,55 @@
  * Arcadia, CA 91024                                                     *
  *************************************************************************/
  /* initial version released 5/95 */
- /* This file is based upon cpu-sparc.c from the Gnu binutils-2.5.2
-    package.  That package came with the following copyright notice: */
+ /* This file is based upon tc-sparc.h from the Gnu binutils-2.5.2 
+    release, which had the following copyright notice: */
 
-	/* BFD support for the SPARC architecture.
-	   Copyright 1992 Free Software Foundation, Inc.
+	/* tc-sparc.h - Macros and type defines for the sparc.
+	   Copyright (C) 1989, 1990, 1991, 1992 Free Software Foundation, Inc.
 
-	This file is part of BFD, the Binary File Descriptor library.
+	   This file is part of GAS, the GNU Assembler.
 
-	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation; either version 2 of the License, or
-	(at your option) any later version.
+	   GAS is free software; you can redistribute it and/or modify
+	   it under the terms of the GNU General Public License as
+	   published by the Free Software Foundation; either version 2,
+	   or (at your option) any later version.
 
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
+	   GAS is distributed in the hope that it will be useful, but
+	   WITHOUT ANY WARRANTY; without even the implied warranty of
+	   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See
+	   the GNU General Public License for more details.
 
-	You should have received a copy of the GNU General Public License
-	along with this program; if not, write to the Free Software
-	Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
+	   You should have received a copy of the GNU General Public
+	   License along with GAS; see the file COPYING.  If not, write
+	   to the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139,
+		USA. */
 
-#include "bfd.h"
-#include "sysdep.h"
-#include "libbfd.h"
+#ifndef TC_LANAI
+#define TC_LANAI 1
 
-const bfd_arch_info_type bfd_lanai3_arch = 
-  {
-    32,	/* 32 bits in a word */
-    32,	/* 32 bits in an address */
-    8,	/* 8 bits in a byte */
-    bfd_arch_lanai3,
-    0,	/* only 1 machine */
-    "lanai3",
-    "lanai3",
-    3,
-    TRUE, /* the one and only */
-    bfd_default_compatible, 
-    bfd_default_scan,
-    0,
-  };
+/* This is used to set the default value for `target_big_endian'.  */
+#define TARGET_BYTES_BIG_ENDIAN 1
+
+#define TARGET_ARCH bfd_arch_lanai
+#define TARGET_FORMAT "coff-lanai"
+#define WORKING_DOT_WORD
+
+#define md_convert_frag(b,s,f)		{as_fatal ("lanai convert_frag\n");}
+#define md_create_long_jump(p,f,t,fr,s)	as_fatal("lanai_create_long_jump")
+#define md_create_short_jump(p,f,t,fr,s) as_fatal("lanai_create_short_jump")
+#define md_estimate_size_before_relax(f,s) \
+			(as_fatal("estimate_size_before_relax called"),1)
+
+#define LISTING_HEADER "Lanai GAS "
+
+#ifdef OBJ_COFF
+#define TC_FORCE_RELOCATION(FIXP)	\
+	((FIXP)->fx_r_type == BFD_RELOC_32_PCREL_S2 \
+	 && ((FIXP)->fx_addsy == 0 \
+	     || S_GET_SEGMENT ((FIXP)->fx_addsy) == absolute_section))
+#define RELOC_REQUIRES_SYMBOL
+#endif
+
+#define TC_HANDLES_FX_DONE
+
+#endif /* TC_LANAI */

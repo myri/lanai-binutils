@@ -198,7 +198,7 @@ ALL_EMULATIONS = \
 	eelf32mcore.o \
 	eelf32mep.o \
 	eelf32mb_linux.o \
- 	eelf32microblaze.o \
+	eelf32microblaze.o \
 	eelf32mipswindiss.o \
 	eelf32mt.o \
 	eelf32openrisc.o \
@@ -265,6 +265,7 @@ ALL_EMULATIONS = \
 	ei386pe.o \
 	ei386pe_posix.o \
 	ei386pep.o \
+	elanaicoff.o \
 	elnk960.o \
 	em32relf.o \
 	em32rlelf.o \
@@ -814,6 +815,9 @@ eelf32mcore.c: $(srcdir)/emulparams/elf32mcore.sh \
 eelf32mep.c: $(srcdir)/emulparams/elf32mep.sh \
   $(srcdir)/emultempl/elf32.em $(srcdir)/scripttempl/mep.sc ${GEN_DEPENDS}
 	${GENSCRIPTS} elf32mep "$(tdir_mep)"
+elanaicoff.c:	$(srcdir)/emulparams/lanaicoff.sh \
+  $(srcdir)/scripttempl/lanaicoff.sc ${GEN_DEPENDS}
+	${GENSCRIPTS} lanaicoff "$(tdir_lanaicoff)"
 em32relf.c: $(srcdir)/emulparams/m32relf.sh \
   $(ELF_DEPS) $(srcdir)/scripttempl/elf.sc ${GEN_DEPENDS}
 	${GENSCRIPTS} m32relf "$(tdir_m32r)"

@@ -710,6 +710,7 @@ case $basic_machine in
 	lanai)
 	        basic_machine=lanai-myricom
 		os=-coff
+		;;
 	m68knommu)
 		basic_machine=m68k-unknown
 		os=-linux

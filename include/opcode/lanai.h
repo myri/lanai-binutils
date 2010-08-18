@@ -1,6 +1,6 @@
 /*************************************************************************
  *                                                                       *
- * Definitions for opcode table for the LANai3.                          *
+ * Definitions for opcode table for the Lanai.                          *
  *                                                                       *
  * Copyright (c) 1994, 1995 by Myricom, Inc.                             *
  * All rights reserved.                                                  *
@@ -59,37 +59,37 @@
 	the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, 
 		USA.   */
 
-/* The LANai3 opcode table (and other related data) is defined in
-   the opcodes library in lanai3-opc.c.  If you change anything here, make
+/* The Lanai opcode table (and other related data) is defined in
+   the opcodes library in lanai-opc.c.  If you change anything here, make
    sure you fix up that file, and vice versa.  */
 
  /* FIXME-someday: perhaps the ,a's and such should be embedded in the
     instruction's name rather than the args.  This would make gas faster, pinsn
     slower, but would mess up some macros a bit.  xoxorich. */
 
-#define lanai3_architecture	bfd_lanai3_architecture
-#define architecture_pname	bfd_lanai3_architecture_pname
-#define lanai3_opcode		bfd_lanai3_opcode
-#define lanai3_opcodes		bfd_lanai3_opcodes
+#define lanai_architecture	bfd_lanai_architecture
+#define architecture_pname	bfd_lanai_architecture_pname
+#define lanai_opcode		bfd_lanai_opcode
+#define lanai_opcodes		bfd_lanai_opcodes
 
 /*
  * Structure of an opcode table entry.
  * This enumerator must parallel the architecture_pname array
- * in bfd/opc-lanai3.c.
+ * in bfd/opc-lanai.c.
  */
-enum lanai3_architecture {
+enum lanai_architecture {
 	v0 = 0, v1
 };
 
 extern const char *architecture_pname[];
 
-struct lanai3_opcode {
+struct lanai_opcode {
 	const char *name;
 	unsigned long match;	/* Bits that must be set. */
 	unsigned long lose;	/* Bits that must be clear. */
 	const char *args;
 	unsigned int flags;
-	enum lanai3_architecture architecture;
+	enum lanai_architecture architecture;
 };
 
 #define	F_ALIAS		1	/* Alias for a "real" instruction */
@@ -125,7 +125,7 @@ struct lanai3_opcode {
 
 /*
 
-All lanai3 opcodes are 32 bits.
+All lanai opcodes are 32 bits.
 
 The match component is a mask saying which bits must match a particular
 opcode in order for an instruction to be an instance of that opcode.
@@ -203,7 +203,7 @@ Literals:([])*+- ,
 
 /* opcodes */
 /* NOTE: The following masks specify all the bits that can be
-   determined solely by knowing which line in lanai3-opc.c (in the opcodes
+   determined solely by knowing which line in lanai-opc.c (in the opcodes
    directory in the gnu binutils release) matched the line of assembly
    code. The OPCODE_MASK specifies which bits of the instruction are constant
    for all instructions in the family.
@@ -379,11 +379,11 @@ Literals:([])*+- ,
 #define X_C21(i)     (((i) & 0xffff) | (((i) & 0x7c0000)>>2))
 #define X_C25(i)     ((i) & 0x1fffffc)
 
-extern struct lanai3_opcode lanai3_opcodes[];
-extern const int bfd_lanai3_num_opcodes;
+extern struct lanai_opcode lanai_opcodes[];
+extern const int bfd_lanai_num_opcodes;
 
-#define NUMOPCODES bfd_lanai3_num_opcodes
+#define NUMOPCODES bfd_lanai_num_opcodes
 
 
 
-/* end of lanai3.h */
+/* end of lanai.h */

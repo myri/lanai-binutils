@@ -1,6 +1,6 @@
 /*************************************************************************
  *                                                                       *
- * tc-lanai3.c -- Assemble for the LANai3                                *
+ * tc-lanai.c -- Assemble for the Lanai                                *
  *                                                                       *
  * Copyright (c) 1994, 1995 by Myricom, Inc.                             *
  * All rights reserved.                                                  *
@@ -65,11 +65,11 @@
 #include "subsegs.h"
 
 /* careful, this file includes data *declarations* */
-#include "opcode/lanai3.h"
+#include "opcode/lanai.h"
 
-static void lanai3_ip PARAMS ((char *));
+static void lanai_ip PARAMS ((char *));
 
-static enum lanai3_architecture current_architecture = v1;
+static enum lanai_architecture current_architecture = v1;
 static int architecture_requested;
 static int warn_on_bump; /* BAD: sparc vestige */
 
@@ -85,26 +85,26 @@ static void s_seg PARAMS ((int));
 static void s_proc PARAMS ((int));
 static void s_reserve PARAMS ((int));
 static void s_common PARAMS ((int));
-static void lanai3_set PARAMS ((int));
+static void lanai_set PARAMS ((int));
 
 const pseudo_typeS md_pseudo_table[] =
 {
   {"align", s_align_bytes, 0},	/* Defaulting is invalid (0) */
   {"common", s_common, 0},
-  {"equ", lanai3_set, 0},
+  {"equ", lanai_set, 0},
   {"global", s_globl, 0},
   {"half", cons, 2},
   {"optim", s_ignore, 0},
   {"proc", s_proc, 0},
   {"reserve", s_reserve, 0},
   {"seg", s_seg, 0},
-  {"set", lanai3_set, 0},
+  {"set", lanai_set, 0},
   {"skip", s_space, 0},
   {"word", cons, 4},
   {"xword", cons, 8},
 #ifdef OBJ_ELF
   {"uaxword", cons, 8},
-  /* these are specific to lanai3/svr4 */
+  /* these are specific to lanai/svr4 */
   {"pushsection", obj_elf_section, 0},
   {"popsection", obj_elf_previous, 0},
   {"uaword", cons, 4},
@@ -149,7 +149,7 @@ static unsigned char octal[256];
 #define isoctal(c)  octal[(unsigned char) (c)]
 static unsigned char toHex[256];
 
-struct lanai3_it
+struct lanai_it
   {
     char *error;
     unsigned long opcode;
@@ -159,7 +159,7 @@ struct lanai3_it
     bfd_reloc_code_real_type reloc;
   };
 
-struct lanai3_it the_insn, set_insn;
+struct lanai_it the_insn, set_insn;
 
 static INLINE int in_signed_range (bfd_signed_vma val, bfd_signed_vma max);
 
@@ -238,7 +238,7 @@ valid_for_letter_p(val,letter)
 }
 
 #if 0
-static void print_insn PARAMS ((struct lanai3_it *insn));
+static void print_insn PARAMS ((struct lanai_it *insn));
 #endif
 static int getExpression PARAMS ((char *str));
 
@@ -649,26 +649,26 @@ md_begin ()
 
   while (i < NUMOPCODES)
     {
-      const char *name = lanai3_opcodes[i].name;
-      retval = hash_insert (op_hash, name, &lanai3_opcodes[i]);
+      const char *name = lanai_opcodes[i].name;
+      retval = hash_insert (op_hash, name, &lanai_opcodes[i]);
       if (retval != NULL)
 	{
 	  fprintf (stderr, "internal error: can't hash `%s': %s\n",
-		   lanai3_opcodes[i].name, retval);
+		   lanai_opcodes[i].name, retval);
 	  lose = 1;
 	}
       do
 	{
-	  if (lanai3_opcodes[i].match & lanai3_opcodes[i].lose)
+	  if (lanai_opcodes[i].match & lanai_opcodes[i].lose)
 	    {
 	      fprintf (stderr, "internal error: losing opcode: `%s' \"%s\"\n",
-		       lanai3_opcodes[i].name, lanai3_opcodes[i].args);
+		       lanai_opcodes[i].name, lanai_opcodes[i].args);
 	      lose = 1;
 	    }
 	  ++i;
 	}
       while (i < NUMOPCODES
-	     && !strcmp (lanai3_opcodes[i].name, name));
+	     && !strcmp (lanai_opcodes[i].name, name));
     }
 
   if (lose)
@@ -693,7 +693,7 @@ md_assemble (str)
   char *toP;
 
   know (str);
-  lanai3_ip (str);
+  lanai_ip (str);
 
   toP = frag_more (4);
   /* put out the opcode */
@@ -727,14 +727,14 @@ BSR (val, amount)
 #endif
 
 static void
-lanai3_ip (str)
+lanai_ip (str)
      char *str;
 {
   char *error_message = "";
   char *s;
   const char *args;
   char c;
-  struct lanai3_opcode *insn;
+  struct lanai_opcode *insn;
   char *argsStart;
   unsigned long opcode;
   unsigned int mask = 0;
@@ -761,7 +761,7 @@ lanai3_ip (str)
     default:
       as_fatal ("Unknown opcode: `%s'", str);
     }
-  if ((insn = (struct lanai3_opcode *) hash_find (op_hash, str)) == NULL)
+  if ((insn = (struct lanai_opcode *) hash_find (op_hash, str)) == NULL)
     {
       as_bad ("Unknown opcode: `%s'", str);
       return;
@@ -1231,13 +1231,13 @@ lanai3_ip (str)
 		     match comes first in the sequence of like-named opcodes */
 		  switch(*args){
 		    case 'o': the_insn.reloc = BFD_RELOC_16; break;
-		    case 'i': the_insn.reloc = BFD_RELOC_LANAI3_10_S; break;
-		    case 'Y': the_insn.reloc = BFD_RELOC_LANAI3_21_F; break;
-		    case 'I': the_insn.reloc = BFD_RELOC_LANAI3_21; break;
-		    case 'B': the_insn.reloc = BFD_RELOC_LANAI3_25; break;
+		    case 'i': the_insn.reloc = BFD_RELOC_LANAI_10_S; break;
+		    case 'Y': the_insn.reloc = BFD_RELOC_LANAI_21_F; break;
+		    case 'I': the_insn.reloc = BFD_RELOC_LANAI_21; break;
+		    case 'B': the_insn.reloc = BFD_RELOC_LANAI_25; break;
 		    /* Decided not to make the encoding pc relative */
-		  /*case 'b': the_insn.reloc = BFD_RELOC_LANAI3_PC25; break;*/
-		    case 'b': the_insn.reloc = BFD_RELOC_LANAI3_25_S; break;
+		  /*case 'b': the_insn.reloc = BFD_RELOC_LANAI_PC25; break;*/
+		    case 'b': the_insn.reloc = BFD_RELOC_LANAI_25_S; break;
 		    case 'L':
 		    case 'J': the_insn.reloc = BFD_RELOC_HI16; break;
 		    case 'j': the_insn.reloc = BFD_RELOC_LO16; break;
@@ -1278,7 +1278,7 @@ lanai3_ip (str)
       if (match == 0)
 	{
 	  /* Args don't match. */
-	  if ((&insn[1] - lanai3_opcodes) < NUMOPCODES
+	  if ((&insn[1] - lanai_opcodes) < NUMOPCODES
 	      && !strcmp (insn->name, insn[1].name))
 	    { /* Try next matching opcode */
 	      ++insn;
@@ -1442,17 +1442,14 @@ md_number_to_chars (buf, val, n)
    hold. */
 
 void
-md_apply_fix3 (fixP, value, segment)
-     fixS *fixP;
-     valueT *value;
-     segT segment ATTRIBUTE_UNUSED;
+md_apply_fix (fixS *fixP, valueT *value, segT segment ATTRIBUTE_UNUSED)
 {
   char *buf = fixP->fx_where + fixP->fx_frag->fr_literal;
   offsetT val;
 
   val = *value;
 
-  assert (fixP->fx_r_type < BFD_RELOC_UNUSED);
+  gas_assert (fixP->fx_r_type < BFD_RELOC_UNUSED);
 
   fixP->fx_addnumber = val;	/* Remember value for emit_reloc */
 
@@ -1462,7 +1459,7 @@ md_apply_fix3 (fixP, value, segment)
 #endif
 
 #ifdef OBJ_ELF
-  /* FIXME: LANai3 ELF relocations don't use an addend in the data
+  /* FIXME: Lanai ELF relocations don't use an addend in the data
      field itself.  This whole approach should be somehow combined
      with the calls to bfd_perform_relocation.  */
   if (fixP->fx_addsy != NULL)
@@ -1492,16 +1489,16 @@ md_apply_fix3 (fixP, value, segment)
   switch (fixP->fx_r_type)
     {
 
-    case BFD_RELOC_LANAI3_6_S:
+    case BFD_RELOC_LANAI_6_S:
       if( val > 0x1f || val < -0x20 )
 	as_bad("BFD_RELOC_6_S overflow."); /* on overflow */
       buf[2] = val&0x3f >> 8;
       buf[3] = val&0x3f >> 0;
       break;
 
-    case BFD_RELOC_LANAI3_10_S:
+    case BFD_RELOC_LANAI_10_S:
       if( val > 0x1ff || val < -0x200)
-	as_bad("BFD_RELOC_LANAI3_10_S overflow."); /* on overflow */
+	as_bad("BFD_RELOC_LANAI_10_S overflow."); /* on overflow */
       buf[2] |= (val&0x3ff) >> 8;
       buf[3] |= (val&0x3ff) >> 0;
       break;
@@ -1530,30 +1527,30 @@ md_apply_fix3 (fixP, value, segment)
       }
       break;
 
-    case BFD_RELOC_LANAI3_21:
+    case BFD_RELOC_LANAI_21:
       if( val > 0x1fffff || val < 0)
-	as_bad("BFD_RELOC_LANAI3_21 overflow."); /* on overflow */
+	as_bad("BFD_RELOC_LANAI_21 overflow."); /* on overflow */
       buf[1] |= ((val&0xffff)|((val<<2)&0x7c0000)) >> 16;
       buf[2]  = ((val&0xffff)|((val<<2)&0x7c0000)) >> 8;
       buf[3]  = ((val&0xffff)|((val<<2)&0x7c0000)) >> 0;
       break;
 
-    case BFD_RELOC_LANAI3_21_F:
+    case BFD_RELOC_LANAI_21_F:
       if( val > 0x1fffff || val < 0 || val & 3 )
-	as_bad("BFD_RELOC_LANAI3_21_F overflow."); /* on overflow */
+	as_bad("BFD_RELOC_LANAI_21_F overflow."); /* on overflow */
       buf[1] |= ((val&0xfffc)|((val<<2)&0x7c0000)) >> 16;
       buf[2]  = ((val&0xfffc)|((val<<2)&0x7c0000)) >> 8;
       buf[3]  = ((val&0xfffc)|((val<<2)&0x7c0000)) >> 0;
       break;
 
-    case BFD_RELOC_LANAI3_25:
+    case BFD_RELOC_LANAI_25:
       if( val > 0x1ffffff || val < 0)
-	as_bad("BFD_RELOC_LANAI3_25 overflow."); /* on overflow */
+	as_bad("BFD_RELOC_LANAI_25 overflow."); /* on overflow */
       goto twenty_five;
-    case BFD_RELOC_LANAI3_PC25:
-    case BFD_RELOC_LANAI3_25_S:
+    case BFD_RELOC_LANAI_PC25:
+    case BFD_RELOC_LANAI_25_S:
       if( val > 0xffffff || val < -0x1000000)
-	as_bad("BFD_RELOC_LANAI3_PC{25,_S} overflow."); /* on overflow */
+	as_bad("BFD_RELOC_LANAI_PC{25,_S} overflow."); /* on overflow */
       twenty_five:
       buf[0] |= (val&0x1fffffc) >> 24;
       buf[1]  = (val&0x1fffffc) >> 16;
@@ -1592,23 +1589,23 @@ tc_gen_reloc (section, fixp)
   bfd_reloc_code_real_type code;
 
   reloc = (arelent *) xmalloc (sizeof (arelent));
-  assert (reloc != 0);
+  gas_assert (reloc != 0);
 
   reloc->sym_ptr_ptr = &fixp->fx_addsy->bsym;
   reloc->address = fixp->fx_frag->fr_address + fixp->fx_where;
 
   switch (fixp->fx_r_type)
     {
-    case BFD_RELOC_LANAI3_6_S:
-    case BFD_RELOC_LANAI3_10_S:
+    case BFD_RELOC_LANAI_6_S:
+    case BFD_RELOC_LANAI_10_S:
     case BFD_RELOC_16:
     case BFD_RELOC_LO16:
     case BFD_RELOC_HI16:
     case BFD_RELOC_HI16_S:
-    case BFD_RELOC_LANAI3_21:
-    case BFD_RELOC_LANAI3_21_F:
-    case BFD_RELOC_LANAI3_25:
-    case BFD_RELOC_LANAI3_PC25:
+    case BFD_RELOC_LANAI_21:
+    case BFD_RELOC_LANAI_21_F:
+    case BFD_RELOC_LANAI_25:
+    case BFD_RELOC_LANAI_PC25:
     case BFD_RELOC_32:
     case BFD_RELOC_CTOR:
       code = fixp->fx_r_type;
@@ -1624,7 +1621,7 @@ tc_gen_reloc (section, fixp)
 		    fixp->fx_r_type, bfd_get_reloc_code_name (code));
       return 0;
     }
-  assert (!fixp->fx_pcrel == !reloc->howto->pc_relative);
+  gas_assert (!fixp->fx_pcrel == !reloc->howto->pc_relative);
 
   /* @@ Why fx_addnumber sometimes and fx_offset other times?  */
 #ifdef OBJ_AOUT
@@ -1655,7 +1652,7 @@ tc_gen_reloc (section, fixp)
 /* for debugging only */
 static void
 print_insn (insn)
-     struct lanai3_it *insn;
+     struct lanai_it *insn;
 {
   const char *const Reloc[] = {
     "RELOC_8",
@@ -1716,7 +1713,7 @@ print_insn (insn)
  *	-bump
  *		Warn on architecture bumps.  See also -A.
  *
- *	-Av6, -Av7, -Av8, -Av9, -Alanai3lite
+ *	-Av6, -Av7, -Av8, -Av9, -Alanailite
  *		Select the architecture.  Instructions or features not
  *		supported by the selected architecture cause fatal errors.
  *
@@ -1736,7 +1733,7 @@ print_insn (insn)
  *
  * Note:
  *		Bumping between incompatible architectures is always an
- *		error.  For example, from lanai3lite to v9.
+ *		error.  For example, from lanailite to v9.
  */
 
 #ifdef OBJ_ELF
@@ -1747,8 +1744,8 @@ CONST char *md_shortopts = "A:";
 struct option md_longopts[] = {
 #define OPTION_BUMP (OPTION_MD_BASE)
   {"bump", no_argument, NULL, OPTION_BUMP},
-#define OPTION_LANai3 (OPTION_MD_BASE + 1)
-  {"lanai3", no_argument, NULL, OPTION_LANai3},
+#define OPTION_Lanai (OPTION_MD_BASE + 1)
+  {"lanai", no_argument, NULL, OPTION_Lanai},
   {NULL, no_argument, NULL, 0}
 };
 size_t md_longopts_size = sizeof(md_longopts);
@@ -1782,7 +1779,7 @@ md_parse_option (c, arg)
 	  }
 	else
 	  {
-	    enum lanai3_architecture new_arch = arch - architecture_pname;
+	    enum lanai_architecture new_arch = arch - architecture_pname;
 #ifdef NO_V9
 	    if (new_arch == v9)
 	      {
@@ -1796,8 +1793,8 @@ md_parse_option (c, arg)
       }
       break;
 
-    case OPTION_LANai3:
-      /* Ignore -lanai3, used by SunOS make default .s.o rule.  */
+    case OPTION_Lanai:
+      /* Ignore -lanai, used by SunOS make default .s.o rule.  */
       break;
 
 #ifdef OBJ_ELF
@@ -1831,7 +1828,7 @@ md_show_usage (stream)
      FILE *stream;
 {
   const char **arch;
-  fprintf(stream, "LANai3 options:\n");
+  fprintf(stream, "Lanai options:\n");
   for (arch = architecture_pname; *arch; arch++)
     {
       if (arch != architecture_pname)
@@ -1839,9 +1836,9 @@ md_show_usage (stream)
       fprintf (stream, "-A%s", *arch);
     }
   fprintf (stream, "\n\
-			specify variant of LANai3 architecture\n\
+			specify variant of Lanai architecture\n\
 -bump			warn when assembler switches architectures\n\
--lanai3			ignored\n");
+-lanai			ignored\n");
 #ifdef OBJ_ELF
   fprintf(stream, "\
 -V			print assembler version number\n\
@@ -1894,7 +1891,7 @@ md_section_align (segment, size)
 }
 
 /* Exactly what point is a PC-relative offset relative TO?
-   On the lanai3, they're relative to the address of the offset, plus
+   On the lanai, they're relative to the address of the offset, plus
    its size.  This gets us to the following instruction.
    (??? Is this right?  FIXME-SOON) */
 long 
@@ -1954,7 +1951,7 @@ get_known_segmented_expression (expP)
 /* Override the default implementation of this, making ".set" and ".equ"
    define symbols appear in the symbol table. */
 static void 
-lanai3_set (ignore)
+lanai_set (ignore)
      int ignore ATTRIBUTE_UNUSED;
 {
   register char *name;
@@ -2028,4 +2025,4 @@ lanai3_set (ignore)
   demand_empty_rest_of_line ();
 }				/* s_set() */
 
-/* end of tc-lanai3.c */
+/* end of tc-lanai.c */

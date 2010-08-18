@@ -858,7 +858,7 @@ do
     icoff_big_vec)		tb="$tb coff-i960.lo cofflink.lo" ;;
     icoff_little_vec)		tb="$tb coff-i960.lo cofflink.lo" ;;
     ieee_vec)			tb="$tb ieee.lo" ;;
-    lanai3_vec)			tb="$tb coff-lanai3.lo" ;;
+    lanai_vec)			tb="$tb coff-lanai.lo" ;;
     m68k4knetbsd_vec)		tb="$tb m68k4knetbsd.lo aout32.lo" ;;
     m68kaux_coff_vec)		tb="$tb coff-aux.lo coff-m68k.lo cofflink.lo" ;;
     m68kcoff_vec)		tb="$tb coff-m68k.lo cofflink.lo" ;;

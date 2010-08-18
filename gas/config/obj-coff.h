@@ -70,10 +70,10 @@
 #endif
 #endif
 
-#ifdef TC_LANAI3
-#include "coff/lanai3.h"
+#ifdef TC_LANAI
+#include "coff/lanai.h"
 #ifndef TARGET_FORMAT
-#define TARGET_FORMAT "coff-lanai3"
+#define TARGET_FORMAT "coff-lanai"
 #endif
 #endif
 

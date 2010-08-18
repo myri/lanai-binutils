@@ -1989,7 +1989,7 @@ enum bfd_architecture
 #define bfd_mach_m32r2         '2'
   bfd_arch_mn10200,   /* Matsushita MN10200 */
   bfd_arch_mn10300,   /* Matsushita MN10300 */
-  bfd_arch_lanai3,    /* Myricom LANai3 */
+  bfd_arch_lanai,    /* Myricom Lanai */
 #define bfd_mach_mn10300               300
 #define bfd_mach_am33          330
 #define bfd_mach_am33_2        332
@@ -4117,6 +4117,15 @@ this offset in the reloc's section offset.  */
   BFD_RELOC_IA64_DTPREL64MSB,
   BFD_RELOC_IA64_DTPREL64LSB,
   BFD_RELOC_IA64_LTOFF_DTPREL22,
+
+/* These relocs are used by the Lanai binutils.  */
+  BFD_RELOC_LANAI_6_S,
+  BFD_RELOC_LANAI_10_S,
+  BFD_RELOC_LANAI_21,
+  BFD_RELOC_LANAI_21_F,
+  BFD_RELOC_LANAI_25,
+  BFD_RELOC_LANAI_PC25,
+  BFD_RELOC_LANAI_25_S,
 
 /* Motorola 68HC11 reloc.
 This is the 8 bit high part of an absolute address.  */

@@ -1,6 +1,6 @@
 /*************************************************************************
  *                                                                       *
- * lanai3.h: coff information for LANai3. 				 *
+ * lanai.h: coff information for Lanai. 				 *
  *                                                                       *
  * Copyright (c) 1994, 1995 by Myricom, Inc.                             *
  * All rights reserved.                                                  *
@@ -54,7 +54,7 @@ struct external_filehdr
 #define F_LNNO		(0x0004)	/* line numbers stripped */
 #define F_LSYMS		(0x0008)	/* local symbols stripped */
 
-#define LANAI3MAGIC	(0x1300)
+#define LANAIMAGIC	(0x1300)
 
 /* This is Lynx's all-platform magic number for executables. */
 

@@ -2049,11 +2049,6 @@ coff_set_arch_mach_hook (bfd *abfd, void * filehdr)
       arch = bfd_arch_ia64;
       break;
 #endif
-#ifdef LANAI3
-    case LANAI3MAGIC:
-      arch = bfd_arch_lanai3;
-      break;
-#endif
 #ifdef ARMMAGIC
     case ARMMAGIC:
     case ARMPEMAGIC:
@@ -2079,6 +2074,11 @@ coff_set_arch_mach_hook (bfd *abfd, void * filehdr)
 	    case F_ARM_5:  machine = bfd_mach_arm_XScale;  break;
 	    }
 	}
+      break;
+#endif
+#ifdef LANAIMAGIC
+    case bfd_arch_lanai:
+      arch = bfd_arch_lanai;
       break;
 #endif
 #ifdef MC68MAGIC
@@ -2908,9 +2908,9 @@ coff_set_flags (bfd * abfd,
       *magicp = IA64MAGIC;
       return TRUE;
 #endif
-#ifdef LANAI3MAGIC
-    case bfd_arch_lanai3:
-      *magicp = LANAI3MAGIC;
+#ifdef LANAIMAGIC
+    case bfd_arch_lanai:
+      *magicp = LANAIMAGIC;
       return TRUE;
 #endif
 #ifdef MC68MAGIC
@@ -4076,6 +4076,11 @@ coff_write_object_contents (bfd * abfd)
 #define __A_MAGIC_SET__
     internal_a.magic = PE32PMAGIC;
 #endif /* IA64 */
+
+#if defined (LANAI)
+#define __A_MAGIC_SET__
+    internal_a.magic = LANAIMAGIC;
+#endif /* LANAI */
 
 #if defined(SPARC)
 #define __A_MAGIC_SET__

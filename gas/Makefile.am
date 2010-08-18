@@ -60,6 +60,7 @@ CPU_TYPES = \
 	i960 \
 	ia64 \
 	ip2k \
+	lanai \
 	lm32 \
 	m32c \
 	m32r \
@@ -262,6 +263,7 @@ TARGET_CPU_CFILES = \
 	config/tc-i960.c \
 	config/tc-ip2k.c \
 	config/tc-iq2000.c \
+	config/tc-lanai.c \
 	config/tc-lm32.c \
 	config/tc-m32c.c \
 	config/tc-m32r.c \
@@ -325,6 +327,7 @@ TARGET_CPU_HFILES = \
 	config/tc-i960.h \
 	config/tc-ip2k.h \
 	config/tc-iq2000.h \
+	config/tc-lanai.h \
 	config/tc-lm32.h \
 	config/tc-m32c.h \
 	config/tc-m32r.h \
