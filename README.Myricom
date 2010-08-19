@@ -1,10 +1,13 @@
 Building from a tarball
 =======================
 
+For general use, Glenn recommends the following, including -fPIC to allow
+static libraries to be used to create shared libraries, as is done
+by the HW group:
+
 	tar xjf lanai-binutils-2.15..X.tar.bz2
 	cd lanai-binutils-2.15..X
-	./configure --target=lanai \
-	  --prefix=/ufs/glenn/install/i686-unknown-linux
+	CFLAGS="-fPIC -O2 -g" ./configure --target=lanai --prefix=...
 	make
 	make install
 
