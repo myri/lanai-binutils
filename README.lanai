@@ -3,10 +3,10 @@ Building from a tarball
 
 For general use, Glenn recommends the following:
 
-	tar xjf lanai-binutils-2.15..X.tar.bz2
-	cd lanai-binutils-2.15..X
+	tar xjf lanai-binutils-VERSION.tar.bz2
+	cd lanai-binutils-VERSION
 	./configure CFLAGS="-O2 -g" --target=lanai --enable-shared --prefix=...
-	make
+	make -j8
 	make install
 
 Building a tarball
