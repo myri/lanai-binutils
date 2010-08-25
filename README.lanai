@@ -1,13 +1,11 @@
 Building from a tarball
 =======================
 
-For general use, Glenn recommends the following, including -fPIC to allow
-static libraries to be used to create shared libraries, as is done
-by the HW group:
+For general use, Glenn recommends the following:
 
 	tar xjf lanai-binutils-2.15..X.tar.bz2
 	cd lanai-binutils-2.15..X
-	CFLAGS="-fPIC -O2 -g" ./configure --target=lanai --prefix=...
+	./configure CFLAGS="-O2 -g" --target=lanai --enable-shared --prefix=...
 	make
 	make install
 
@@ -19,9 +17,7 @@ On glenn.sw.myri.com:
 	cd binutils
 	git clean -f -x -d
 	./prep
-	./configure\
-	  --target=lanai\
-	  --enable-maintainer-mode
+	./configure --target=lanai --enable-maintainer-mode
 	make -k distclean
 	N=lanai-binutils-2.15..X
 	tar cjf ../$N.tar.bz2 --exclude-vcs --transform "s@^@$N/@" *

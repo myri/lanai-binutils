@@ -109,7 +109,7 @@ print_insn_lanai (memaddr, info)
 {
   FILE *stream = info->stream;
   bfd_byte buffer[4];
-  unsigned long insn;
+  unsigned int insn;
   register int i;
 
   if (!opcodes_sorted)

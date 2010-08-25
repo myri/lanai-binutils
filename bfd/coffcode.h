@@ -2077,7 +2077,7 @@ coff_set_arch_mach_hook (bfd *abfd, void * filehdr)
       break;
 #endif
 #ifdef LANAIMAGIC
-    case bfd_arch_lanai:
+    case LANAIMAGIC:
       arch = bfd_arch_lanai;
       break;
 #endif
