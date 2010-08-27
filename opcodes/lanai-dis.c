@@ -260,9 +260,9 @@ print_insn_lanai (memaddr, info)
 		    imm = SEX (X_C25(insn), 25);
 		    goto print_address;
 
+		  print_immediate:
 		    (*info->fprintf_func) (stream, "0x%x", imm);
 		    break;
-		  print_immediate:
 		  print_address:
 		    info->target = imm;
                     (*info->print_address_func) (imm, info);
@@ -367,23 +367,6 @@ print_insn_lanai (memaddr, info)
 		    }
 		}
 	    }
-
-	  /* The compiler only uses SLS and SLI when it knows the
-	     constant will fit in the 21 bit immediate field (it
-	     assumes all symbol_refs and label_refs fit in the
-	     bottom 2MB of memory.).  Consequently, we add a comment
-	     symbolically indicating the address the immediate
-	     represents. */
-	  if( (opcode->flags & (F_SLS|F_BR)) && !(opcode->flags & F_REL)){
-	    (*info->fprintf_func) (stream, "\t! ");
-	    if(opcode->flags & (F_SLS)){
-	      info->target = 0xFFFFFFFF & X_C21(insn);
-	    }else{
-	      info->target = 0xFFFFFFFF & X_C25(insn);
-	    }
-	    (*info->print_address_func) (info->target, info);
-	    info->data_size = 4;  /* FIXME!!! */
-	  }
 
 	  info->data_size = F_DATA_SIZE(opcode->flags);
 
