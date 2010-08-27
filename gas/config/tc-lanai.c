@@ -119,7 +119,7 @@ const int md_reloc_size = 12;	/* Size of relocation record */
 
 /* This array holds the chars that always start a comment.  If the
    pre-processor is disabled, these aren't very useful */
-const char comment_chars[] = "!";	/* JF removed '|' from comment_chars */
+const char comment_chars[] = "!;";	/* JF removed '|' from comment_chars */
 
 /* This array holds the chars that only start a comment at the beginning of
    a line.  If the line seems to have the form '# 123 filename'
