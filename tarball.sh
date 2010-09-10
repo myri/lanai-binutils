@@ -1,4 +1,5 @@
 #! /bin/sh
+
 warn () {
     echo "@@@" "$@" "@@@"
 }
@@ -14,7 +15,7 @@ V=`fgrep AM_INIT_AUTOMAKE bfd/configure.in \
     | sed -e 's@[^,]*,\([^)]*\).*@\1@' \
     | sed -e 's/[^-._a-zA-Z0-9]/_/g'` || die "Could not extract version"
 NM="lanai-binutils-$V"
-tarball="$NM.tar.bz2"
+tarball="../$NM.tar.bz2"
 
 # Verify the build is likely to work.
 
@@ -23,7 +24,7 @@ test `git status | fgrep modified: | wc -l` = 0 || die "Uncommitted modification
 
 # Verify the user wants to build the tarball.
 
-echo -n "Build ../$tarball? "
+echo -n "Build $tarball? "
 read yes
 test "x$yes" = "xyes" || die "You did not type \"yes\"."
 
@@ -39,6 +40,7 @@ test `git status | fgrep modified: | wc -l` = 0 || die "Build modified files."
 # look at the source later.
 
 ( git log | head -1 > .git_id ) || die "Could not create .git_id"
-must tar cjf "../$tarball.tmp" --exclude-vcs --transform "s@^\.@$NM@" .
+must tar cjf "$tarball.tmp" --exclude-vcs --transform "s@^\.@$NM@" .
 must rm .git_id
-must mv -f "../$NM.tar.bz2.tmp" "../$NM.tar.bz2"
+must mv -f "$tarball.tmp" "$tarball"
+echo "Tarball is $tarball"
