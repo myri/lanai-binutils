@@ -12,15 +12,7 @@ For general use, Glenn recommends the following:
 Building a tarball
 ==================
 
-On glenn.sw.myri.com:
-   	git clone -b lanai ~glenn/git/binutils.git
-	cd binutils
-	git clean -f -x -d
-	./prep
-	./configure --target=lanai --enable-maintainer-mode
-	make -k distclean
-	N=lanai-binutils-2.15..X
-	tar cjf ../$N.tar.bz2 --exclude-vcs --transform "s@^@$N/@" *
+	./tarball.sh
 
 Installing maximally-compatible shared binaries
 ===============================================
