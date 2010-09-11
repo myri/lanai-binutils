@@ -1,3 +1,7 @@
+2010-09-10  Glenn Brown  <glenn@myri.com>
+
+	* lanai-dis.c (print_insn_lanai): Avoid improper 64-bit sign extension.
+
 2009-10-06  Nick Clifton  <nickc@redhat.com>
 
 	* po/fi.po: Updated Finnish translation.

@@ -146,7 +146,6 @@ print_insn_lanai (memaddr, info)
 	  /* Nonzero means that we have found an instruction which has
 	     the effect of adding or or'ing the imm13 field to rs1.  */
 	  int imm_added_to_rs1 = 0;
-	  int base_is_r0 = 0;
 
 	  /* Do we have an `add' or `or' immediate instruction where rs1 is 
 	     the same as rd?  */
@@ -174,7 +173,7 @@ print_insn_lanai (memaddr, info)
 
 	  {
 	    register CONST char *s;
-	    int imm;
+	    unsigned int imm;
 
 	    for (s = opcode->args; *s != '\0'; ++s)
 	      {
@@ -191,7 +190,6 @@ print_insn_lanai (memaddr, info)
 #define	reg(n)	(*info->fprintf_func) (stream, "%%%s", reg_names[n])
 		  case '1':
 		    reg (X_RS1 (insn));
-		    if(!X_RS1 (insn)) base_is_r0 = 1;
 		    break;
 
 		  case '2':
@@ -238,14 +236,14 @@ print_insn_lanai (memaddr, info)
 
 		  case 'o':
 		    imm = SEX (X_C16(insn), 16);
-		    if(base_is_r0) goto print_address;
+		    if (X_RS1 (insn) == 0) goto print_address;
 		    goto print_immediate;
 		  case 's':
 		    imm = SEX (X_C16(insn), 16);
 		    goto print_immediate;
 		  case 'i':
 		    imm = SEX (X_C10(insn), 10);
-		    if(base_is_r0) goto print_address;
+		    if (X_RS1 (insn) == 0) goto print_address;
 		    goto print_immediate;
 		  case 'I':
 		    imm = X_C21(insn);
