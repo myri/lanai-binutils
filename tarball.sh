@@ -35,13 +35,13 @@ echo -n "Build $tarball? "
 read yes
 test "x$yes" = "xyes" || die "You did not type \"yes\"."
 
-# Verify builds work, and cleanup.  This is not required.
-
-must ./configure CFLAGS="-O2 -g" --target=lanai --enable-shared --prefix="`pwd`/install"
-must make -j8
-must make install
-must git clean -fxd
-test `git status | fgrep modified: | wc -l` = 0 || die "Build modified files."
+# # Verify builds work, and cleanup.  This is not required.
+# 
+# must ./configure CFLAGS="-O2 -g" --target=lanai --enable-shared --prefix="`pwd`/install"
+# must make -j8
+# must make install
+# must git clean -fxd
+# test `git status | fgrep modified: | wc -l` = 0 || die "Build modified files."
 
 # Create the tarball, including the Git commit ID in case we need to
 # look at the source later.
